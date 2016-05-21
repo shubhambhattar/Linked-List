@@ -9,29 +9,23 @@ struct node {
     struct node* next;
 };
 
-// Pointer to the first node of the linked list.
-struct node* head;
 
-// Stores size of the linked list.
-int size;
-
-
-void insert_at_beginning(int element) {
+void insert_at_beginning(struct node** head, int element) {
 
     // Insert an element at the beginning of the linked list.
     struct node* temp = (struct node*) malloc(sizeof(struct node*));
     temp -> data = element;
-    temp -> next = head;
-    head = temp;
+    temp -> next = *head;
+    *head = temp;
 }
 
 
-void insert_at(int element, int position) {
+void insert_at(struct node** head, int element, int position) {
 
     /* Insert an element in the list at the given index.
        Indexing is assumed to start with 1, i.e., the first element is at index 1. */
 
-    struct node* temp = head;
+    struct node* temp = *head;
     struct node* new_temp = (struct node*) malloc(sizeof(struct node*));
 
     new_temp -> data = element;
@@ -46,7 +40,7 @@ void insert_at(int element, int position) {
     // Special case for the insertion at the first position.
     if(position == 1) {
         new_temp -> next = temp;
-        head = new_temp;
+        *head = new_temp;
         return;
     }
 
@@ -68,18 +62,18 @@ void insert_at(int element, int position) {
 
 }
 
-void insert(int element) {
+void insert(struct node** head, int element) {
 
     // Insert an element at the end of the linked list.
 
-    struct node* traverse = head;
+    struct node* traverse = *head;
     struct node* temp = (struct node*) malloc(sizeof(struct node*));
     temp -> data = element;
     temp -> next = NULL;
 
     // If the linked list is empty, make it the first element by pointing head to it.
-    if(head == NULL) {
-        head = temp;
+    if(*head == NULL) {
+        *head = temp;
         return;
     }
 
@@ -89,12 +83,12 @@ void insert(int element) {
     traverse -> next = temp;
 }
 
-void delete_at(int position) {
+void delete_at(struct node** head, int position) {
 
     /* Delete an element at the given position from the linked list.
        Indexing is assumed to start with 1, i.e., the first element of the linked list is at index 1. */
 
-    struct node* temp = head;
+    struct node* temp = *head;
 
     // Indexing starts with 1.
     if(position < 1) {
@@ -104,16 +98,16 @@ void delete_at(int position) {
 
     // Special Case for deletion of first node.
     if(position == 1) {
-        if(head == NULL) {
+        if(*head == NULL) {
             printf("List is empty.\n");
             return;
         }
-        head = temp -> next;
+        *head = temp -> next;
         free(temp);
         return;
     }
 
-    struct node* traverse = head;
+    struct node* traverse = *head;
     for(int i = 1; i <= position - 2; i++) {
         if(traverse == NULL) {
             printf("Invalid Index. Please try again.\n");
@@ -131,17 +125,17 @@ void delete_at(int position) {
     free(temp);
 }
 
-void print() {
+void print(struct node** head) {
 
     // Prints all the elements present in the linked list starting from head.
 
-    if(head == NULL) {
+    if(*head == NULL) {
         printf("List is empty.\n\n");
         return;
     }
 
     printf("Elements of List are: ");
-    struct node* temp = head;
+    struct node* temp = *head;
     while(temp != NULL) {
         printf("%d ", temp -> data);
         temp = temp -> next;
@@ -149,7 +143,7 @@ void print() {
     printf("\n\n");
 }
 
-void menu() {
+void menu(struct node** head) {
 
     // Prints the menu infinite times until the user chooses to exit.
 
@@ -170,29 +164,29 @@ void menu() {
         switch(choice) {
             case 1: printf("Enter an element: ");
                     scanf("%d", &element);
-                    insert(element);
-                    print();
+                    insert(head, element);
+                    print(head);
                     break;
 
             case 2: printf("Enter an element: ");
                     scanf("%d", &element);
-                    insert_at_beginning(element);
-                    print();
+                    insert_at_beginning(head, element);
+                    print(head);
                     break;
 
             case 3: printf("Enter an element and index: ");
                     scanf("%d %d", &element, &position);
-                    insert_at(element, position);
-                    print();
+                    insert_at(head, element, position);
+                    print(head);
                     break;
 
             case 4: printf("Enter an index: ");
                     scanf("%d", &position);
-                    delete_at(position);
-                    print();
+                    delete_at(head, position);
+                    print(head);
                     break;
 
-            case 5: print();
+            case 5: print(head);
                     break;
 
             case 6: run = 0;
@@ -206,9 +200,9 @@ void menu() {
 int main() {
 
     // initialize head to NULL to signify empty list
-    head = NULL;
+    struct node* head = NULL;
 
     // Menu driven program.
-    menu();
+    menu(&head);
     return 0;
 }
