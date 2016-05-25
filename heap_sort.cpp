@@ -1,5 +1,5 @@
 #include <iostream>
-#include <algorithm>
+// #include <algorithm>
 
 // Stores the size of heap.
 int size;
@@ -21,6 +21,7 @@ void heapify(int* a, int x) {
 int extract(int* a) {
 
     // Swap the first element with the last element and then heapify.
+
     int result = a[0];
     a[0] = a[size - 1];
     size--;
@@ -67,7 +68,8 @@ int main() {
 
     int n;
     std::cin >> n;
-    int a[n], size = n;
+    int a[n];
+    size = n;
     for(int i = 0; i < n; i++)
         std::cin >> a[i];
 
@@ -80,4 +82,3 @@ int main() {
         std::cout << a[i] << " ";
     std::cout << "\n";
 }
-    
