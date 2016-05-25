@@ -1,2 +1,1 @@
-# Linked-List
-Linked List programs
+A repository of Data Structures programs.
