@@ -1,1 +1,1 @@
-A repository of Data Structures programs.
+My implementation of different Data Structures and Algorithms.
