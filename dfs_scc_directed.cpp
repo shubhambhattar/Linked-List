@@ -11,7 +11,6 @@ int count = 0;
 
 void dfs_visit(const std::vector <std::vector <int> >& graph, int u, int c) {
     visited[u] = true;
-    ++count;                // For previsit timer
     component[u] = c;       // Vertex `u` added to component `c`
 
     for(size_t v = 0; v < graph[u].size(); ++v) {
