@@ -3,7 +3,7 @@
 #include <algorithm>
 
 std::vector <int> ans;
-std::vector <int> visited;
+std::vector <bool> visited;
 
 // Do a DFS traversal starting from node `u`
 void dfs_visit(const std::vector <std::vector <int> >& graph, int u) {
@@ -27,7 +27,7 @@ int main() {
 
     // number of vertices in the graph.
     const int n = 6;
-    visited = std::vector <int> (n, false);         // set all the vertices to not visited
+    visited = std::vector <bool> (n, false);         // set all the vertices to not visited
     std::vector <std::vector <int> > graph = {
         {1, 3},
         {2, 3},
@@ -37,7 +37,7 @@ int main() {
         {}
     };
 
-    dfs(graph);                                 // DFS traversal on the graph
+    dfs(graph);                                     // DFS traversal on the graph
     // reverse the vertices based on the descending order of postvisit times
     std::reverse(ans.begin(), ans.end());
     for(size_t i = 0; i < ans.size(); i++)
