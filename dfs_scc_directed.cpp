@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <cstring>
 #include <algorithm>
 
 std::vector <bool> visited;
-std::vector <std::pair <int, int> > post;
+std::stack <int> post;
 std::vector <int> component;
 
-int count = 0;
 
 void dfs_visit(const std::vector <std::vector <int> >& graph, int u, int c) {
     visited[u] = true;
@@ -17,9 +17,7 @@ void dfs_visit(const std::vector <std::vector <int> >& graph, int u, int c) {
         if(!visited[graph[u][v]])
             dfs_visit(graph, graph[u][v], c);
     }
-
-    ++count;                        // For postvisit timer
-    post.push_back({count, u});     // vector of pair containing {postvisit time, vertex}
+    post.push(u);
 }
 
 int dfs(const std::vector <std::vector <int> >& graph, const std::vector <std::vector <int> >& graph_rev) {
@@ -32,16 +30,15 @@ int dfs(const std::vector <std::vector <int> >& graph, const std::vector <std::v
             dfs_visit(graph, v, 0);
     }
     
-    // Remark all vertices as not visited and sort them
-    // in descending order of postvisit times.
+    // Remark all vertices as not visited.
     std::fill(visited.begin(), visited.end(), false);
-    std::sort(post.begin(), post.end(), std::greater <std::pair <int, int> >());
     
     // cc stores the number of connected components.
     int cc = 0;
-    for(size_t v = 0; v < post.size(); v++) {
-        if(!visited[post[v].second]) {
-            dfs_visit(graph_rev, post[v].second, cc);
+    while(!post.empty()) {
+        int v = post.top(); post.pop();
+        if(!visited[v]) {
+            dfs_visit(graph_rev, v, cc);
             ++cc;
         }
     }
