@@ -54,6 +54,6 @@ int main() {
             std::cout << d[i] << ' ';
         std::cout << std::endl;
     } else {
-        std::cout << "Negative weight cycle found reachable from source" << std::endl;
+        std::cout << "Negative weight cycle found" << std::endl;
     }
 }
