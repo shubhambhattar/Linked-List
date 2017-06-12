@@ -4,10 +4,18 @@
 
 std::vector <int> d, parent;
 
-bool bellman_ford(const std::vector <std::vector <std::pair <int, int> > >& graph, int source) {
-    size_t n = graph.size();
+// mark all initial distances as infinity except the source vertex.
+void initialise_single_source(size_t graph_size, int source) {
+    d = std::vector <int> (graph_size, 2e9);
+    parent = std::vector <int> (graph_size, -1);
     d[source] = 0;
     parent[source] = source;
+}
+
+bool bellman_ford(const std::vector <std::vector <std::pair <int, int> > >& graph, int source) {
+    size_t n = graph.size();
+    initialise_single_source(n, source);
+    
     for(size_t i = 0; i < n-1; i++) {
         for(size_t u = 0; u < n; u++) {
             for(size_t k = 0; k < graph[u].size(); k++) {
@@ -38,8 +46,7 @@ int main() {
 
     // pair will contain {vertex, weight}
     std::vector <std::vector <std::pair <int, int> > > graph(n);
-    d = std::vector <int> (n, 2e9);
-    parent = std::vector <int> (n, -1);
+    
 
     // 1-based indexing assumed
     for(int i = 0; i < m; i++) {
