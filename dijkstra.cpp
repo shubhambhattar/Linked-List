@@ -19,8 +19,7 @@ void dijkstra(const std::vector <std::vector <std::pair <int, int> > >& graph, i
 
     // make a min-priority queue and initialize it - {distance, vertex}
     std::priority_queue <std::pair <int, int>, std::vector <std::pair <int, int> >, std::greater <std::pair <int, int> > > pq;
-    for(size_t i = 0; i < n; i++)
-        pq.push({d[i], i});
+    pq.push({d[source], source});
 
     // repeatedly remove the vertex with the shortest distance
     // and relax all its adjacent edges.
